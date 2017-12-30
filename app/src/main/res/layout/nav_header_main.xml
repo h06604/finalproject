@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/side_nav_bar">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        android:background="@drawable/a1234"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="24dp"
+            android:layout_marginStart="24dp"
+            android:paddingBottom="8dp"
+            android:text="一起來練大雞雞"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:textColor="#FFF"
+            android:textSize="25sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <Button
+                    android:id="@+id/button1"
+                    android:layout_width="165dp"
+                    android:layout_height="45dp"
+                    android:background="@android:color/transparent"
+                    android:drawableLeft="@drawable/ic_local_dining_black_24dp"
+                    android:paddingLeft="10dp"
+                    android:text="健康檢查" />
+
+                <Button
+                    android:id="@+id/button2"
+                    android:layout_width="165dp"
+                    android:layout_height="45dp"
+                    android:background="@android:color/transparent"
+                    android:drawableLeft="@drawable/ic_directions_run_black_24dp"
+                    android:paddingLeft="10dp"
+                    android:text="運動塑身" />
+
+                <Button
+                    android:id="@+id/button3"
+                    android:layout_width="165dp"
+                    android:layout_height="45dp"
+                    android:background="@android:color/transparent"
+                    android:drawableLeft="@drawable/ic_assessment_black_24dp"
+                    android:paddingLeft="10dp"
+                    android:text="完成進度" />
+
+                <Button
+                    android:id="@+id/button4"
+                    android:layout_width="165dp"
+                    android:layout_height="45dp"
+                    android:background="@android:color/transparent"
+                    android:drawableLeft="@drawable/ic_delete_black_24dp"
+                    android:paddingLeft="10dp"
+                    android:text="進度重置" />
+
+                <Button
+                    android:id="@+id/button5"
+                    android:layout_width="165dp"
+                    android:layout_height="45dp"
+                    android:background="@android:color/transparent"
+                    android:drawableLeft="@drawable/ic_attach_money_black_24dp"
+                    android:paddingLeft="10dp"
+                    android:text="贊助我們" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
