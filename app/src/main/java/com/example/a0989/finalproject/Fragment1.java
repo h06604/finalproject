@@ -4,6 +4,8 @@ package com.example.a0989.finalproject;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.icu.math.BigDecimal;
+import android.icu.text.DecimalFormat;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -29,10 +31,13 @@ public class Fragment1 extends Fragment {
     private View view;
     Button bt5;
     TextView tv1,tv2,tv3;
-    Integer year=0;
+    Integer year=0,heart1=0,heart2=0;
     Double  BMI=0.0,BASE=0.0,RRE=0.0,weight=0.0,tall=0.0;
-    String[] messageData1 = new String[]{"","","","","",""};
-
+    String[] messageData1 = new String[]{"","","","",""};
+    String[] fat=new String[]{"過輕","正常","過重","輕度肥胖","中度肥胖","重度肥胖"};
+    String fatdegree="";
+    String[] sport=new String[]{"全身","胸部､背部","胸部､背部","腹部､腿部","腹部､腿部","腹部､腿部"};
+    String sportdegree="";
     public Fragment1() {
         // Required empty public constructor
     }
@@ -45,15 +50,8 @@ public class Fragment1 extends Fragment {
         // Inflate the layout for this fragment
         view= inflater.inflate(R.layout.fragment_fragment1, container, false);
         final SharedPreferences preferences = this.getActivity().getSharedPreferences("data", MODE_PRIVATE);
-
-        tv1=(TextView)view.findViewById(R.id.bmi);
-        tv2=(TextView)view.findViewById(R.id.base);
-        tv3=(TextView)view.findViewById(R.id.rre);
-
-        tv1.setText(preferences.getString("BMI",""));
-        tv2.setText(preferences.getString("BASE",""));
-        tv3.setText(preferences.getString("RRE",""));
-        for(int i=0;i<3;i++){
+        tv1=(TextView) view.findViewById(R.id.sportwhere);
+        for(int i=0;i<5;i++){
             if(i==0){
                 messageData1[i]="BMI:"+preferences.getString("BMI","");
             }
@@ -63,9 +61,16 @@ public class Fragment1 extends Fragment {
             else if(i==2){
                 messageData1[i]="靜態能量消耗值:"+preferences.getString("RRE","");
             }
+            else if(i==3){
+                messageData1[i]="燃脂運動心率:"+preferences.getString("heart1","")+"次/分~"+preferences.getString("heart2","")+"次/分";
+            }
+            else if(i==4){
+                messageData1[i]="肥胖程度:"+preferences.getString("fatdegree","");
+            }
         }
-
         showList();
+        sportdegree=preferences.getString("sportdegree","");
+        tv1.setText(sportdegree);
 
 
         bt5=(Button)view.findViewById(R.id.button5);
@@ -92,10 +97,39 @@ public class Fragment1 extends Fragment {
                             BMI=weight/((tall/100)*(tall/100));
                             BASE=(13.7*weight)+(5*tall)-(6.8*year)+66;
                             RRE=(10*weight)+(6.5*tall)-(5*year)+5;
-                            String  basetmp=BASE.toString();
-                            String  bmitmp=BMI.toString();
-                            String  rretmp=RRE.toString();
-                            for(int i=0;i<3;i++){
+                            heart1=(220-year)*6/10;
+                            heart2=(220-year)*8/10;
+                            java.text.DecimalFormat decimalFormat1=new java.text.DecimalFormat("0.0");
+                            String heart1tmp=heart1.toString();
+                            String heart2tmp=heart2.toString();
+                            String  basetmp=decimalFormat1.format(BASE);
+                            String  bmitmp=decimalFormat1.format(BMI);
+                            String  rretmp=decimalFormat1.format(RRE);
+                            if(BMI>=35){
+                                fatdegree=fat[5];
+                                sportdegree=sport[5];
+                            }
+                            else if(35>BMI && BMI>=30){
+                                fatdegree=fat[4];
+                                sportdegree=sport[4];
+                            }
+                            else if(30>BMI && BMI>=27){
+                                fatdegree=fat[3];
+                                sportdegree=sport[3];
+                            }
+                            else if(27>BMI && BMI>=24){
+                                fatdegree=fat[2];
+                                sportdegree=sport[2];
+                            }
+                            else if(24>BMI && BMI>=18.5){
+                                fatdegree=fat[1];
+                                sportdegree=sport[1];
+                            }
+                            else if(18.5>BMI){
+                                fatdegree=fat[0];
+                                sportdegree=sport[0];
+                            }
+                            for(int i=0;i<5;i++){
                                 if(i==0){
                                     messageData1[i]="BMI:"+bmitmp;
                                 }
@@ -105,11 +139,17 @@ public class Fragment1 extends Fragment {
                                 else if(i==2){
                                     messageData1[i]="靜態能量消耗值:"+rretmp;
                                 }
+                                else if(i==3){
+                                    messageData1[i]="燃脂運動心率:"+heart1tmp+"次/分~"+heart2tmp+"次/分";
+                                }
+                                else if(i==4){
+                                    messageData1[i]="肥胖程度:"+fatdegree;
+                                }
                             }
-                            tv2.setText(basetmp);
-                            tv1.setText(bmitmp);
-                            tv3.setText(rretmp);
-                            preferences.edit().putString("BMI",bmitmp).putString("BASE",basetmp).putString("RRE",rretmp).apply();
+
+                            preferences.edit().putString("BMI",bmitmp).putString("BASE",basetmp).putString("RRE",rretmp).putString("heart1",heart1tmp)
+                                    .putString("heart2",heart2tmp).putString("fatdegree",fatdegree).putString("sportdegree",sportdegree).apply();
+                            tv1.setText(sportdegree);
                             showList();
                         }
                     }
@@ -117,7 +157,6 @@ public class Fragment1 extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialog,int which){
                         Toast.makeText(getContext(),"取消" , Toast.LENGTH_SHORT).show();
-
                     }
                 }).show();
             }
@@ -138,7 +177,50 @@ public class Fragment1 extends Fragment {
 
                 }
                 else{
-                    Toast.makeText(getContext(),"OOKK",Toast.LENGTH_SHORT).show();
+                    if(position==0){
+                        LayoutInflater inflater = LayoutInflater.from(getContext());
+                        final View a=inflater.inflate(R.layout.bmiinformation,null);
+                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
+                        alertDialogBuilder.setView(a).setTitle("身體質量指數(BMI)").setPositiveButton("確定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog,int which){
+                                Toast.makeText(getContext(),"OOKK",Toast.LENGTH_SHORT).show();
+                            }
+                        }).show();
+                    }
+                    else if(position==1){
+                        LayoutInflater inflater = LayoutInflater.from(getContext());
+                        final View a=inflater.inflate(R.layout.bmrinformation,null);
+                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
+                        alertDialogBuilder.setView(a).setTitle("基礎代謝率(BMR)").setPositiveButton("確定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog,int which){
+                                Toast.makeText(getContext(),"OOKK",Toast.LENGTH_SHORT).show();
+                            }
+                        }).show();
+                    }
+                    else if(position==2){
+                        LayoutInflater inflater = LayoutInflater.from(getContext());
+                        final View a=inflater.inflate(R.layout.rreinformation,null);
+                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
+                        alertDialogBuilder.setView(a).setTitle("靜態能量消耗值(REE)").setPositiveButton("確定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog,int which){
+                                Toast.makeText(getContext(),"OOKK",Toast.LENGTH_SHORT).show();
+                            }
+                        }).show();
+                    }
+                    else if(position==3){
+                        LayoutInflater inflater = LayoutInflater.from(getContext());
+                        final View a=inflater.inflate(R.layout.heartinformation,null);
+                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
+                        alertDialogBuilder.setView(a).setTitle("燃脂運動最佳心率").setPositiveButton("確定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog,int which){
+                                Toast.makeText(getContext(),"OOKK",Toast.LENGTH_SHORT).show();
+                            }
+                        }).show();
+                    }
                 }
             }
         });
