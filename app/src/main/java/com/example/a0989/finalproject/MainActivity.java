@@ -21,7 +21,7 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
- 
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private TabLayout mTab;
@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity
         transaction.replace(R.id.center, fragment1, "fragment1");
         transaction.addToBackStack("fragment1");
         transaction.commit();
-
+  
         bt1=(Button)findViewById(R.id.button1);
         bt1.setOnClickListener(new View.OnClickListener(){
             @Override
