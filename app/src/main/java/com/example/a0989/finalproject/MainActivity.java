@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity
         Fragment1 fragment1 = new Fragment1();
         transaction.replace(R.id.center, fragment1, "fragment1");
         transaction.addToBackStack("fragment1");
-        transaction.commit();
+         transaction.commit();
 
         bt1=(Button)findViewById(R.id.button1);
         bt1.setOnClickListener(new View.OnClickListener(){
