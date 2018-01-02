@@ -13,7 +13,7 @@ import android.widget.Button;
  * A simple {@link Fragment} subclass.
  */
 public class Fragment2 extends Fragment {
-    Button bt5,bt6;
+    
 
     public Fragment2() {
         // Required empty public constructor
