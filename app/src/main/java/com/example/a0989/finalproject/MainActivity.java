@@ -45,8 +45,8 @@ public class MainActivity extends AppCompatActivity
         Fragment1 fragment1 = new Fragment1();
         transaction.replace(R.id.center, fragment1, "fragment1");
         transaction.addToBackStack("fragment1");
-         transaction.commit();
- 
+        transaction.commit();
+
         bt1=(Button)findViewById(R.id.button1);
         bt1.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -71,6 +71,20 @@ public class MainActivity extends AppCompatActivity
                 Fragment2 fragment2 = new Fragment2();
                 transaction.replace(R.id.center, fragment2, "fragment2");
                 transaction.addToBackStack("fragment2");
+                transaction.commit();
+                drawer.closeDrawer(GravityCompat.START);
+            }
+        });
+        bt3=(Button)findViewById(R.id.button3);
+        bt3.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                manager = getSupportFragmentManager();
+                transaction = manager.beginTransaction();
+                Toast.makeText(MainActivity.this,"B",Toast.LENGTH_SHORT).show();
+                Fragment3 fragment3 = new Fragment3();
+                transaction.replace(R.id.center, fragment3, "fragment3");
+                transaction.addToBackStack("fragment3");
                 transaction.commit();
                 drawer.closeDrawer(GravityCompat.START);
             }
